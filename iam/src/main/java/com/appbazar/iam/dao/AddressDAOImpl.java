@@ -19,7 +19,7 @@ public class AddressDAOImpl implements AddressDAO {
 
 	public long addAddress(Address address) {
 
-		template.save(address);
+		template.save(address); 
 		return address.getAddrId();
 	}
 
