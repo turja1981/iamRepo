@@ -15,7 +15,6 @@
 
 	<context:component-scan base-package="com.appbazar.iam" />
 	<mvc:annotation-driven />
-	
 	<bean id="iamsessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
@@ -24,17 +23,15 @@
             <list>
                 <value>com.appbazar.iam.entity.User</value>
                 <value>com.appbazar.iam.entity.Address</value>
+                <value>com.appbazar.iam.entity.Message</value>
+                <value>com.appbazar.iam.entity.Service</value>
+                <value>com.appbazar.iam.entity.ServiceResponse</value>
             </list>
         </property>
-       
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${jdbc.dialect}</prop>
 				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.connection.autocommit">true</prop>
-				<prop key="hibernate.cache.use_query_cache">false</prop>
-                <prop key="hibernate.cache.use_second_level_cache">false</prop>
-                
 			</props>
 		</property>
 	</bean>
@@ -57,11 +54,37 @@
 	<bean id="addressDAO" class="com.appbazar.iam.dao.AddressDAOImpl">
 		<property name="template" ref="template"></property>
 	</bean>
+	<bean id="messageDAO" class="com.appbazar.iam.dao.MessageDAOImpl">
+		<property name="template" ref="template"></property>
+	</bean>
+	<bean id="serviceDAO" class="com.appbazar.iam.dao.ServiceDAOImpl">
+		<property name="template" ref="template"></property>
+	</bean>
+	<bean id="responseDAO" class="com.appbazar.iam.dao.ServiceResponseDAOImpl">
+		<property name="template" ref="template"></property>
+	</bean>	
+
 	<bean id="registrationService" class="com.appbazar.iam.service.RegistrationService">
 		<property name="regDAO" ref="regDAO" />
 	</bean>
+	<bean id="messageService" class="com.appbazar.iam.service.MessageService">
+		<property name="messageDAO" ref="messageDAO" />
+	</bean>
+
+	<bean id="professionalService" class="com.appbazar.iam.service.ProfessionalService">
+		<property name="regDAO" ref="regDAO" />
+		<property name="serviceDAO" ref="serviceDAO" />
+		<property name="serviceResponseDAO" ref="responseDAO" />
+		<property name="addressDAO" ref="addressDAO" />
+	</bean>	
 	<bean id="registrationController" class="com.appbazar.iam.controller.RegistrationController">
-		<property name="service" ref="registrationService" />
+		<property name="regService" ref="registrationService" />
+	</bean>
+	<bean id="messageController" class="com.appbazar.iam.controller.MessageController">
+		<property name="messageService" ref="messageService" />
+	</bean>
+	<bean id="serviceController" class="com.appbazar.iam.controller.ServiceController">
+		<property name="professionalService" ref="professionalService" />
 	</bean>
 
 

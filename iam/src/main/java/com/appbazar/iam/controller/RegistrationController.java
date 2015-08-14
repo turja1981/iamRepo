@@ -11,36 +11,31 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.appbazar.iam.entity.User;
-import com.appbazar.iam.framework.RegistrationServiceIntf;
+import com.appbazar.iam.service.RegistrationService;
 
 @RestController
 @RequestMapping("/user")
 public class RegistrationController {
 
 	@Autowired
-	private RegistrationServiceIntf service;
+	private RegistrationService regService;
 
-	public void setService(RegistrationServiceIntf service) {
-		this.service = service;
+	
+
+	public void setRegService(RegistrationService regService) {
+		this.regService = regService;
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public long registerUser(@RequestBody User user) {
-		System.out.println("test");
-		System.out.println(user.getName());
-	
-		System.out.println(user.getEmail());
-		user.setCreatedBy(user.getMobileNo());
-		user.setUpdatedBy(user.getMobileNo());
-		user.setCreatedOn(new Timestamp(new java.util.Date().getTime()));
-		user.setUpdatedOn(new Timestamp(new java.util.Date().getTime()));
-		return service.registerUser(user);
+
+		return regService.registerUser(user);
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public List<User> getAllUsers() {
 
-		return service.getAllUsers();
+		return regService.getAllUsers();
 	}
 
 	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
@@ -48,14 +43,14 @@ public class RegistrationController {
 
 		User user = new User();
 		user.setUserId(userId);
-		return service.getUser(user);
+		return regService.getUser(user);
 	}
 
 	@RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
 	public void updateUser(@RequestBody User user , @PathVariable int userId) {
 		
 		user.setUserId(userId);
-		service.updateUser(user);
+		regService.updateUser(user);
 	}
 
 	@RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
@@ -64,7 +59,7 @@ public class RegistrationController {
 	//	User user = new User();
 		user.setUserId(userId);
 		System.out.println("delete");
-		service.deleteUser(user);
+		regService.deleteUser(user);
 	}
 
 }

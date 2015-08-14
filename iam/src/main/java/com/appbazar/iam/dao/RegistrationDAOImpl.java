@@ -1,5 +1,6 @@
 package com.appbazar.iam.dao;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.hibernate.LockMode;
@@ -22,11 +23,19 @@ public class RegistrationDAOImpl implements RegistrationDAO {
 	@Override
 	public long addUser(User user) {
 
+		user.setCreatedBy(user.getMobileNo());
+		user.setUpdatedBy(user.getMobileNo());
+		user.setCreatedOn(new Timestamp(new java.util.Date().getTime()));
+		user.setUpdatedOn(new Timestamp(new java.util.Date().getTime()));
 		template.save(user);
 		
 		for (Address address :user.getAddress())
 		{
 			address.setUserforeign(user);
+			address.setCreatedBy(user.getMobileNo());
+			address.setUpdatedBy(user.getMobileNo());
+			address.setCreatedOn(new Timestamp(new java.util.Date().getTime()));
+			address.setUpdatedOn(new Timestamp(new java.util.Date().getTime()));
 			template.save(address);
 		}
 		

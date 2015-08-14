@@ -47,7 +47,7 @@ public class Address  {
 		return userforeign;
 	}
 
-	@JsonIgnore
+	
 	public void setUserforeign(User userforeign) {
 		this.userforeign = userforeign;
 	}
