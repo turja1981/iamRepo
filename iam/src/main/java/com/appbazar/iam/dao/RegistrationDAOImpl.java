@@ -31,6 +31,7 @@ public class RegistrationDAOImpl implements RegistrationDAO {
 		
 		for (Address address :user.getAddress())
 		{
+			
 			address.setUserforeign(user);
 			address.setCreatedBy(user.getMobileNo());
 			address.setUpdatedBy(user.getMobileNo());
@@ -39,6 +40,7 @@ public class RegistrationDAOImpl implements RegistrationDAO {
 			template.save(address);
 		}
 		
+		
 		return user.getUserId();
 	}
 
@@ -46,6 +48,10 @@ public class RegistrationDAOImpl implements RegistrationDAO {
 	public List<User> getAllUsers() {
 
 		List<User> listUser = (List<User>) template.find("from User");
+		for (User user:listUser)
+		{
+			user.setAddress( (List<Address>)template.find("from Address  where userforeign=?" , user));
+		}
 
 		return listUser;
 	}

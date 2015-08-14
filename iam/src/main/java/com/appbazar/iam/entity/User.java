@@ -14,8 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 
 /**
  * @author 138932
@@ -46,9 +45,8 @@ public class User {
 	protected int experience;
 	@Column(name = "STATUS")
 	protected String status;
-	@OneToMany(fetch=FetchType.LAZY , cascade={CascadeType.ALL})
+	@OneToMany
 	@JoinColumn(name="USER_ID")
-	@JsonManagedReference
 	protected List<Address> address;
 
 	

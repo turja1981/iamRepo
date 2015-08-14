@@ -21,14 +21,7 @@ public class Address  {
 	@Column(name = "ADRS_ID" , nullable=false, unique=true)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int addrId;
-	public int getAddrId() {
-		return addrId;
-	}
-
-	public void setAddrId(int addrId) {
-		this.addrId = addrId;
-	}
-
+	
 	@Column(name = "CITY")
 	private String city ;
 	@Column(name = "LOCALITY")
@@ -37,7 +30,6 @@ public class Address  {
 	private String zip ;
 	@Column(name = "COUNTRY")
 	private String country ;
-	
 	@ManyToOne
     @JoinColumn(name="USER_ID", nullable=false)
 	private User userforeign ;
@@ -47,7 +39,14 @@ public class Address  {
 		return userforeign;
 	}
 
-	
+	public int getAddrId() {
+		return addrId;
+	}
+
+	public void setAddrId(int addrId) {
+		this.addrId = addrId;
+	}
+
 	public void setUserforeign(User userforeign) {
 		this.userforeign = userforeign;
 	}
